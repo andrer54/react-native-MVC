@@ -15,7 +15,9 @@ import db from './DatabaseInstance';
    public async incluir(entidade: T): Promise<void>{
      await db.transaction(txn => txn.executeSql(
        this.getInsertSQL(),this.getInsertParams(entidade)
-     ));        
+     ));     
+      
+       
    }
    public async alterar(entidade: T): Promise<void>{
      await db.transaction(txn => txn.executeSql(
@@ -50,7 +52,7 @@ import db from './DatabaseInstance';
      )
    }
    constructor(){
-     db.transaction((txn)=>
+     await db.transaction((txn)=>
        txn.executeSql(
          ' SELECT name FROM sqlite_master WHERE type='table' '+
          ' AND name = ? ',
